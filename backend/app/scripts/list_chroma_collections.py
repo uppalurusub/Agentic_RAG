@@ -1,9 +1,10 @@
 import chromadb
-from app.core.llm_config import VECTOR_DB_PATH
+from app.config.settings import settings 
+#VECTOR_DB_PATH
 
-client = chromadb.PersistentClient(path=VECTOR_DB_PATH)
+client = chromadb.PersistentClient(path=settings.vector_db_path)
 
-print("Database path:", VECTOR_DB_PATH)
+print("Database path:", settings.vector_db_path)
 
 collections = client.list_collections()
 print("Collections found:", len(collections))

@@ -4,7 +4,7 @@ from typing import Any, Optional
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-from app.core.config import settings
+from app.config.settings import settings
 
 
 @lru_cache(maxsize=1)
@@ -33,7 +33,7 @@ def get_vector_store(force_recreate: bool = False) -> Chroma:
         _store = None
 
     if _store is None:
-        settings.resolved_vector_db_path.mkdir(parents=True, exist_ok=True)
+        #settings.resolved_vector_db_path.mkdir(parents=True, exist_ok=True)
         _store = Chroma(
             collection_name=settings.chroma_collection,
             persist_directory=str(settings.resolved_vector_db_path),

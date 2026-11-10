@@ -5,8 +5,8 @@ from functools import lru_cache
 
 from app.implementations.rag_implementation import AgenticRAGImplementation
 from app.schemas.rag_schema import AskResponse, IngestResponse
-
-logger = logging.getLogger(__name__)
+from app.config.settings import settings
+logger = settings.get_logger()
 
 
 @lru_cache(maxsize=1)

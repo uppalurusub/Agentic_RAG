@@ -12,5 +12,6 @@ chromadb
 pydantic
 python-multipart
 langchain-community
-mlflow
+langsmith
 pypdf
+loguru

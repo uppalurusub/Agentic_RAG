@@ -1,7 +1,7 @@
 import json
 import logging
 
-from app.implementations.agentic_rag_impl import AgenticRAGImplementation
+from app.implementations.rag_implementation import AgenticRAGImplementation
 
 logging.basicConfig(level=logging.INFO)
 

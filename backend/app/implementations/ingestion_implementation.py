@@ -1,20 +1,20 @@
 from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from app.core.config import settings
+from app.config.settings import settings
 from app.implementations.vector_store import get_vector_store
 
 class IngestionImplementation:
     def __init__(self):
         self.root = settings.resolved_documents_dir
-        self.root.mkdir(parents=True, exist_ok=True)
+        #self.root.mkdir(parents=True, exist_ok=True)
     def _paths(self, requested):
         if not requested: paths = list(self.root.glob("*.pdf")) + list(self.root.glob("*.txt"))
         else:
             paths = []
             for item in requested:
-                p = (self.root / item).resolve()
-                if self.root.resolve() not in p.parents: raise ValueError("Only paths under DOCUMENTS_DIR are allowed")
+                p = (Path(self.root) / item).resolve()
+                if Path(self.root).resolve() not in p.parents: raise ValueError("Only paths under DOCUMENTS_DIR are allowed")
                 if not p.is_file(): raise ValueError(f"File not found: {item}")
                 paths.append(p)
         return sorted(paths)

@@ -7,7 +7,8 @@ from langchain_chroma import Chroma
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
-logger = logging.getLogger(__name__)
+from app.config.settings import settings
+logger = settings.get_logger()
 
 
 class SearchInput(BaseModel):
@@ -18,7 +19,19 @@ def build_knowledge_search_tool(vector_store: Chroma, top_k: int) -> StructuredT
     def search_knowledge(query: str) -> str:
         logger.info("RAG search started | query=%r", query)
         docs = vector_store.similarity_search(query, k=top_k)
-        logger.info("RAG search completed | query=%r | result_count=%d", query, len(docs))
+        #logger.info("RAG search completed | query=%r | result_count=%d", query, len(docs))
+        logger.info(
+            "RAG search started | query={}",
+            query,
+        )
+
+        docs = vector_store.similarity_search(query, k=top_k)
+
+        logger.info(
+            "RAG search completed | query={} | result_count={}",
+            query,
+            len(docs),
+        )
 
         results = []
         for doc in docs:

@@ -4,8 +4,8 @@ from app.schemas.rag_schema import AskRequest, AskResponse, IngestRequest, Inges
 from app.services.rag_service import RAGService
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from app.services.documents_service import DocumentsService
-from app.core.config import settings
-from app.core.dependencies import documents_service
+from app.config.settings import settings
+from app.config.dependencies import documents_service
 import logging
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/rag", tags=["Agentic RAG"])
@@ -21,6 +21,18 @@ def get_service() -> RAGService:
 def ask_question(request: AskRequest) -> AskResponse:
     try:
         return get_service().ask(request.question, request.request_id)
+    except Exception:
+            logger.exception(
+                "Agentic RAG execution failed | request_id={}",
+                request.request_id,
+            )
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "message": "Agentic RAG execution failed. Check server logs.",
+                    "request_id": request.request_id,
+                },
+            )
     except RuntimeError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
     except Exception as exc:
@@ -28,6 +40,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Agentic RAG execution failed. Check server logs using the request_id.",
         ) from exc
+    
 
 @router.post("/ingest", response_model=IngestResponse, summary="Upload and ingest one document")
 async def ingest(
@@ -55,7 +68,7 @@ async def ingest(
         if not content:
             raise HTTPException(status_code=400, detail="The uploaded file is empty.")
 
-        documents_dir = settings.resolved_documents_dir
+        documents_dir = Path(settings.resolved_documents_dir)
         documents_dir.mkdir(parents=True, exist_ok=True)
         destination = documents_dir / original_name
         destination.write_bytes(content)

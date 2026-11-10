@@ -1,0 +1,91 @@
+
+
+
+{
+  "question": "How much would two additional monitoring visits at each of the six sites cost?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+
+{
+  "question": "Which clinical monitoring activities are described in the document?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+
+{
+  "question": "Which clinical operations activities are described in the monitoring plan?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+
+{
+  "question": "What is the illustrative total budget, including contingency?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+
+
+{
+  "question": "How much would two additional monitoring visits at each of the six sites cost?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+{
+  "question": "What are the intended categories for this document?",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
+
+
+
+{
+  "question": "How much would two additional monitoring visits at each of the six sites cost, using the stated unit cost? Explain the calculation.",
+  "filters": {
+    "category_match": "any",
+    "document_ids": []
+  },
+  "top_k": 5,
+  "include_sources": true
+  
+}
